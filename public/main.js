@@ -1,15 +1,25 @@
 // Get modal element
 var modal = document.getElementById('simpleModal');
+
+var modal2 = document.getElementById('simpleModal2');
 // Get open modal button
 var modelBtn = document.getElementById('modalBtn');
+
+var modelBtn2 = document.getElementById('modalBtn2');
 // Get close button
 var closeBtn = document.getElementsByClassName('closeBtn')[0];
 
 // Listen for open click
 modalBtn.addEventListener('click', openModal);
 
+// Listen for open click
+modalBtn2.addEventListener('click', openModal);
+
 // Scrape button to load articles
 modalBtn.addEventListener('click', displayArticles);
+
+// Scrape button to load more articles
+modalBtn2.addEventListener('click', displayArticles);
 
 // Listen for close click
 closeBtn.addEventListener('click', closeModal);

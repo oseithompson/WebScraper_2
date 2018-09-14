@@ -32,19 +32,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect(encodeURI("mongodb://oseithompson0:2%~8M=GpqI+gV2KZyQcf@ds137862.mlab.com:37862/webscraper"), { useNewUrlParser: true });
+
+start = 'mongodb://'
+
+
+mongoose.connect(encodeURI(start + 'localhost/week18Populater'  || start + 'oseithompson0:2%~8M=GpqI+gV2KZyQcf@ds145072.mlab.com:45072/heroku_sr9cnxpf'), { useNewUrlParser: true });
+// mongoose.connect(encodeURI("mongodb://oseithompson0:2%~8M=GpqI+gV2KZyQcf@ds137862.mlab.com:37862/webscraper"), { useNewUrlParser: true });
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  axios.get("http://www.thestar.com/").then(function(response) {
+  axios.get("https://www.echojs.com/").then(function(response) {
+    // console.log(response)
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
+    // console.log($("article h2"))
 
     // Now, we grab every h2 within an article tag, and do the following:
     $("article h2").each(function(i, element) {
+      console.log(element)
       // Save an empty result object
       var result = {};
 
@@ -56,15 +64,19 @@ app.get("/scrape", function(req, res) {
         .children("a")
         .attr("href");
 
+      // result.id = i + 1; 
+      //*---- console.log(result); 
+
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
           // View the added result in the console
-          console.log(dbArticle);
+          res.json(dbArticle);
         })
         .catch(function(err) {
+          // console.log(err);
           // If an error occurred, send it to the client
-          return res.json(err);
+          res.json(err);
         });
     });
 
@@ -76,8 +88,12 @@ app.get("/scrape", function(req, res) {
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
-  db.Article.find().limit(20)
-    .then(function(dbArticle) {
+  // db.Article.find({}).limit(20)
+  db.Article.find({
+    id: {$gt: 1, $lt: lastArticle + 20}
+  })
+  
+  .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);
     })
@@ -86,6 +102,25 @@ app.get("/articles", function(req, res) {
       res.json(err);
     });
 });
+
+var lastArticle = 20
+
+// Grab 20 more articles and append them to the existing list
+// app.get("/articles", function(req, res) {
+//   // Grab every document in the Articles collection
+//   db.Article.find({
+//     id: {$gt: 21, $lt: 40}
+//   })
+//     .then(function(dbArticle) {
+//       // If we were able to successfully find Articles, send them back to the client
+//       res.json(dbArticle);
+//     })
+//     .catch(function(err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
+
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
@@ -99,6 +134,18 @@ app.get("/articles/:id", function(req, res) {
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+//repeat of the articles funtion used for more articles
+app.get("/moreArticles/:id", function(req, res) {
+  db.Article.findOne({ _id: req.params.id })
+    .populate("note")
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
       res.json(err);
     });
 });
@@ -119,6 +166,20 @@ app.post("/articles/:id", function(req, res) {
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+// repeat of this id funtion for more articales
+app.post("/moreArticles/:id", function(req, res) {
+  db.Note.create(req.body)
+    .then(function(dbNote) {
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+    })
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
       res.json(err);
     });
 });

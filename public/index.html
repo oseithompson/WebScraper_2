@@ -4,12 +4,36 @@
     <meta charset="UTF-8">
     <title>Scraping With Mongoose</title>
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
   </head>
   <body>
-    <div id="wrapper">
-      <h1>Web Scraper</h1>
-      <h2><i>If you can do this...the homework should be no problem.</i></h2>
-      <button id="modalBtn" class="button">Scrape Articles</button>
+    <div class="container">
+      
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="./index.html">Home</a></li>
+                <li><a href="#">Saved Articles</a></li>
+              </ul>
+            </div>
+          </nav>          
+
+      <div class="jumbotron">
+        <div id="wrapper">
+          <h1>Web Scraper</h1>
+          <h2><i>If you can do this...the homework should be no problem.</i></h2>
+
+          <div class="btn-group">
+            <button id="modalBtn" class="btn btn-primary">Scrape Articles</button>
+            <button id="modalBtn2" class="btn btn-primary">Scrape More Articles</button>
+          </div>
+        </div>
+      </div>
+
     </div>
         
         <!-- Button trigger modal -->
@@ -18,14 +42,26 @@
             <div id="simpleModal" class="modal">
               <div class="modal-content">
                 <span class="closeBtn">&times</span>
-                <h2>Here are 20 Articales</h2>
+                <h2 class="modal-text">Here are 20 Articales</h2>
               </div>
             </div>
             
+              <div id="simpleModal2" class="modal">
+                <div class="modal-content">
+                  <span class="closeBtn">&times</span>
+                  <h2 class="modal-text">Here are 20 More Articales</h2>
+                </div>
+              </div>
+            
     </div>
-      
-      <div id="notes"></div>
-      <div class="articleTitle" id="articles"></div>
+      <div class="container">
+        
+        <div class="alert">
+          <div id="notes"></div>
+          <div class="articleTitle" id="articles"></div>
+        </div>
+
+      </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="app.js"></script>

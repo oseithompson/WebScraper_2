@@ -1,12 +1,38 @@
 /* Main Body */
-body { background-color: #F2F6D0 }
+body { 
+  background-color: rgba(24, 41, 68, 0.534);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-decoration-color: #f4f4f4;
+}
+.jumbotron {
+  background-color: #d9edf7
+}
+.alert-info {
+  color: #31708f;
+   background-color: white;
+  border-color: white;
+}
+p {
+  margin: 0px 0px 13px;
+  padding: 5px 0px 5px 11px;
+  background-color: #31708f;
+  color: white;
+  border-radius: 5px;
+}
 #wrapper {
+  color: #31708f;
   width: 960px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 5%;
+  padding-top: 1%;
 }
 #articles {
+  display: inline-block;
+  overflow: auto;
+  width: 60%;
+  height: 700px;
+}
+#moreArticles {
   display: inline-block;
   overflow: auto;
   width: 60%;
@@ -31,7 +57,7 @@ textarea {
 }
 
 /* Modal Construct */
-.modal{
+.modal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -42,11 +68,26 @@ textarea {
     overflow: auto;
     background-color: rgb(0,0,0,0.5);
 }
+.modal2 {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0,0.5);
+}
+.modal-text {
+  font-size: 4rem;
+}
 .modal-content{
     background-color: #f4f4f4;
+    text-align: center;
     margin: 20%;
     padding: 20px;
-    width: 70%;
+    width: 60%;
     box-shadow: 0 5px 8px 0 rgb(0,0,0,0.2),00 7px 20px 0 rgb(0,0,0,0.17);
     animation-name: modalopen;
     animation-duration: 1s;
@@ -71,6 +112,11 @@ textarea {
 #articles {
   display: none;
 }
+#moreArticles {
+  display: none;
+}
 #notes {
   display: none;
 }
+
+/* Notes */

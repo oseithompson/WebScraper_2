@@ -8,6 +8,13 @@ $.getJSON("/articles", function(data) {
   }
 });
 
+$.getJSON("/moreArticles", function(data) {
+  // For each one
+  for (var i = 0; i < data.length; i++) {
+    // Display the apropos information on the page
+    $("#moreArticles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+  }
+});
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
@@ -20,6 +27,10 @@ $(document).on("click", "p", function() {
   $.ajax({
     method: "GET",
     url: "/articles/" + thisId
+  })
+  $.ajax({
+    method: "GET",
+    url: "/moreArticles/" + thisId
   })
     // With that done, add the note information to the page
     .then(function(data) {
